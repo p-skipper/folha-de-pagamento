@@ -18,3 +18,8 @@ const registrarHoras = (id, horasTrabalhadas) => {
     funcionario.horasTrabalhadas.push(horasTrabalhadas);
   }
 };
+
+function calcularSalarioMensal(funcionario) {
+  const totalHoras = funcionario.horasTrabalhadas.reduce((total, hora) => total + hora, 0);
+  return totalHoras * funcionario.taxaHoraria;
+}
