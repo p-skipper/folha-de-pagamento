@@ -1,7 +1,7 @@
 const funcionarios = [];
 
 const adicionarFuncionario = (id, nome, cargo, taxaHoraria) => {
-  let funcionario = {
+  const funcionario = {
     id,
     nome,
     cargo,
@@ -36,7 +36,7 @@ function calcularInss(funcionario) {
     { limite: 4000.03, aliquota: 12 },
     { limite: Infinity, aliquota: 14 },
   ];
-  const tetoInss = 908.85;
+  const tetoInss = 908.85;  
 
   let inss = 0;
   for (let faixa of faixas) {
@@ -47,4 +47,22 @@ function calcularInss(funcionario) {
   }
 
   return Math.min(inss, tetoInss);
+}
+
+function gerarRelatorioPagamento() {
+
+  funcionarios.forEach((func) => {
+      const totalHoras = func.horasTrabalhadas.reduce((acc, hora) => acc + hora, 0);
+
+      const salarioBruto = calcularSalarioMensal(func);
+      const inss = calcularInss(func);
+      const salarioLiquido = salarioBruto - inss;
+
+      console.log(`Nome: ${func.nome}`);
+      console.log(`Cargo: ${func.cargo}`);
+      console.log(`Total de Horas: ${totalHoras}`);
+      console.log(`Valor do INSS: R$ ${inss.toFixed(2)}`);
+      console.log(`Salário Bruto: R$ ${salarioBruto.toFixed(2)}`);
+      console.log(`Salário Líquido: R$ ${salarioLiquido.toFixed(2)}`);
+  });
 }
